@@ -197,7 +197,7 @@ if uploaded_file is not None:
     df_stressed.loc[target_row, year_cols] = income_sum + cost_sum
 
     cashflow =  df_stressed.loc[target_row, year_cols]
-
+    
 
     st.subheader("📊 Variación Cash Flow")
     st.bar_chart(cashflow)
@@ -209,8 +209,28 @@ if uploaded_file is not None:
     project_irr = irr(cashflow)
 
     c1, c2 = st.columns(2)
+
+    fideico = st.number_input("% Fideicomitente", value=83.07, step=0.1) / 100
+    ofp = 1 - fideico 
+    st.write(f"Fideicomitente: {round(fideico*100,2)}%")
+    st.write(f"PúblicO General: {round(ofp*100,2)}%")
+    
     c1.metric("NPV (USD)", f"{project_npv/fx_rate:,.2f}")
-    c2.metric("IRR", f"{project_irr*100:.2f}%")
+    
+    cashflow_fideico = cashflow
+    aporte_inicial_fideico = st.number_input("Aporte Inicial Fideicomitente", value=-2163.3, step=0.1)
+    cashflow_fideico.iloc[0] = aporte_inicial_fideico
+    
+    cashflow_opv = cashflow
+    aporte_inicial_opv = st.number_input("Aporte Inicial Fideicomitente", value=-441, step=0.1)
+    cashflow_opv.iloc[1] = aporte_inicial_opv
+
+    fideico_irr = irr(cashflow_fideico)
+    opv_irr = irr(cashflow_opv)
+    c2.metric("IRR Fideicomiso", f"{fideico_irr*100:.2f}%")
+    c2.metric("IRR Público General", f"{opv_irr*100:.2f}%")
+
+    
 
     # Show final table
     st.subheader("Flujos Simulados Estresados")
@@ -218,6 +238,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
