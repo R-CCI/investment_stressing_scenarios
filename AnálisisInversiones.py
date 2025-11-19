@@ -5,7 +5,7 @@ import numpy as np
 import streamlit as st
 import pandas as pd
 import numpy as np
-
+import numpy_financial as npf
 st.set_page_config(page_title="Real Estate Stress Test", layout="wide")
 
 
@@ -13,7 +13,7 @@ def npv(rate, cashflows):
     return np.sum(cashflows / (1 + rate) ** np.arange(len(cashflows)))
 
 def irr(cashflows):
-    return np.irr(cashflows)
+    return npf.irr(cashflows)
 
 
 st.title("Simulador de Escenarios de Estrés")
@@ -151,4 +151,5 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
