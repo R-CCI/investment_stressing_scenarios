@@ -214,7 +214,7 @@ if uploaded_file is not None:
     project_irr = irr(cashflow)
     
     st.write("Flujo de Caja del Proyecto")
-    st.write(cashflow.T)
+    st.write(pd.DataFrame(cashflow).T)
 
     reserva_liquidez = pd.Series(np.zeros(len(cashflow)), index=cashflow.index)
     reserva_liquidez.iloc[1] = -350.00
@@ -259,6 +259,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
