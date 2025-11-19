@@ -6,7 +6,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import numpy_financial as npf
-st.set_page_config(page_title="Stress Analysis", layout="wide")
+st.set_page_config(page_title="Análisis Estrés", layout="wide")
 
 
 def npv(rate, cashflows):
@@ -18,16 +18,16 @@ def irr(cashflows):
 
 st.title("Simulador de Escenarios de Estrés")
 
-uploaded_file = st.file_uploader("Upload your Excel file", type=["xlsx"])
+uploaded_file = st.file_uploader("Subir Excel", type=["xlsx"])
 
 # Sidebar parameters
-st.sidebar.header("Parameters")
+st.sidebar.header("Parámetros")
 
 wacc = st.sidebar.number_input("WACC (%)", value=19.48, step=0.1) / 100
-fx_rate = st.sidebar.number_input("DOP/USD Exchange Rate", value=63.0, step=0.5)
+fx_rate = st.sidebar.number_input("Tasa de Cambio DOP/USD", value=63.0, step=0.5)
 
 st.sidebar.write("---")
-st.sidebar.header("Stress Scenarios (Select any combination)")
+st.sidebar.header("Escenarios de Estrés")
 
 # -------------------------
 # Scenario Switches
@@ -41,7 +41,7 @@ use_cost_inflation = st.sidebar.checkbox("Inflación o Aumento de Costos")
 # -------------------------
 if use_income_reduction:
     income_reduction_pct = st.sidebar.slider(
-        "Reduce projected income by (%)", 0, 80, 20
+        "Ingresos reducidos en un (%)", 0, 100, 10
     ) / 100
 else:
     income_reduction_pct = 0
@@ -58,7 +58,7 @@ if use_income_redistribution:
 
 if use_cost_inflation:
     inflation_rate = st.sidebar.slider(
-        "Costos incrementados en un (%)", 0, 40, 10
+        "Costos incrementados en un (%)", 0, 50, 5
     ) / 100
 else:
     inflation_rate = 0
@@ -184,13 +184,10 @@ if uploaded_file is not None:
         df_stressed.loc[cost_rows, future_year_cols] *= (1 + inflation_rate)
         st.success(f"Costos incrementados en un {inflation_rate*100:.0f}%")
 
-    # --------------------------------------
-    # CREATE CASHFLOW VECTOR
-    # --------------------------------------
-    # 1. Identify the target row
+
     target_row = df_stressed[df_stressed.iloc[:,0].str.contains("Flujo", case=False, na=False)].index[0]
     
-    # 2. Compute sums of income and cost rows
+
     income_sum = df_stressed.loc[income_rows, year_cols].sum()
     cost_sum   = df_stressed.loc[all_cost_rows, year_cols].sum()
     # 3. Assign the result to the target row
@@ -250,7 +247,7 @@ if uploaded_file is not None:
     opv_irr = irr(cashflow_opv)
 
     c1.metric("NPV (USD)", f"{project_npv/fx_rate:,.2f}")
-    c1.metric("NPV of Net Dividends (USD)", f"{npv(wacc, new_cf)/fx_rate:,.2f}")
+    c1.metric("NPV of Dividenddos Netos (USD)", f"{npv(wacc, new_cf)/fx_rate:,.2f}")
     
     c2.metric("IRR Fideicomiso", f"{fideico_irr*100:.2f}%")
     c2.metric("IRR Público General", f"{opv_irr*100:.2f}%")
@@ -262,7 +259,8 @@ if uploaded_file is not None:
     st.dataframe(df_stressed)
 
 else:
-    st.info("Upload an Excel file to begin.")
+    st.info("Suba un Excel")
+
 
 
 
