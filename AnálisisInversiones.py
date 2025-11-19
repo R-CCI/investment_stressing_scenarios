@@ -85,8 +85,7 @@ if uploaded_file is not None:
     )].index
 
     all_cost_rows  = df[df.iloc[:,0].str.contains(
-        "Permisos|Promoción|Gastos de Administración|Legales, Seguros y Otros|Project Management|Management Fee|Fideicomiso|Imprevistos Soft Costs|Reembolso de CAPEX|Etapa I de Desarrollo Urbano|Etapa 2 de Desarrollo Urbano|Mantenimiento de Áreas Verdes|Vigilancia Diurna|Vigilancia Nocturna|Vigilancia Móvil|
-        ",
+        "Permisos|Promoción|Gastos de Administración|Legales, Seguros y Otros|Project Management|Management Fee|Fideicomiso|Imprevistos Soft Costs|Reembolso de CAPEX|Etapa I de Desarrollo Urbano|Etapa 2 de Desarrollo Urbano|Mantenimiento de Áreas Verdes|Vigilancia Diurna|Vigilancia Nocturna|Vigilancia Móvil",
         case=False, na=False
     )].index
     
@@ -209,6 +208,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
