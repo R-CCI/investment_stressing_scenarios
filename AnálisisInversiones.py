@@ -218,7 +218,7 @@ if uploaded_file is not None:
     st.write(reserva_liquidez)
 
     st.write("Flujo Acumulado")
-    st.write((reserva_liquidez+cashflow).cumsum()
+    st.write((reserva_liquidez+cashflow).cumsum())
     
     c1, c2 = st.columns(2)
 
@@ -253,6 +253,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
