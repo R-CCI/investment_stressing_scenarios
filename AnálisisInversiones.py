@@ -87,10 +87,10 @@ if uploaded_file is not None:
         case=False, na=False
     )].index
 
-    all_cost_rows  = df[df.iloc[:,0].str.contains(
-        "Permisos|Promoción|Gastos|Administración|Legales|Management|Fideicomiso|Imprevistos|Reembolso|CAPEX|Etapa|Etapa|Mantenimiento|Vigilancia",
+    all_cost_rows  = df[np.logical_or(df.iloc[:,0].str.contains(
+        "Permisos|Promoción|Gastos|Administración|Legales|Management|Imprevistos|Reembolso|CAPEX|Etapa|Etapa|Mantenimiento|Vigilancia",
         case=False, na=False
-    )].index
+    ), df.iloc[:,0]=="Fideicomiso")].index
     
     cost_rows = df[df.iloc[:,0].str.contains(
         "Etapa|Vigilancia|Mantenimiento|CAPEX",
@@ -220,6 +220,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
