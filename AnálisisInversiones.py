@@ -101,74 +101,74 @@ if uploaded_file is not None:
     # --------------------------------------
     if use_income_redistribution:
 
-    income = df_stressed.loc[income_rows, year_cols].values.astype(float)
-    n_years = len(year_cols)
-
-    # ------------------------------------------------
-    # METHOD 1: RANDOM SHOCK REDISTRIBUTION
-    # ------------------------------------------------
-    if redistribution_method == "Shock Aleatorio":
-
-        # Example: shocks from -30% to +20%
-        shocks = np.random.uniform(-0.30, 0.20, size=n_years)
-
-        for i in range(n_years):
-
-            # Negative shock: move income to next year
-            if shocks[i] < 0 and i < n_years - 1:
-                lost = -income[:, i] * shocks[i]
-                income[:, i] += income[:, i] * shocks[i]
-                income[:, i + 1] += lost
-
-            # Positive shock: advance income from next year
-            elif shocks[i] > 0 and i > 0:
-                advance = income[:, i] * shocks[i]
-                income[:, i] -= advance
-                income[:, i - 1] += advance
-
-        df_stressed.loc[income_rows, year_cols] = income
-        st.success(f"Ventas redistribuidas usando {redistribution_method}")
-
-    # ------------------------------------------------
-    # METHOD 2: S-CURVE REDISTRIBUTION
-    # ------------------------------------------------
-    elif redistribution_method == "S-Curve":
-
-        # Common S-curve for absorption
-        curve = np.linspace(0.1, 0.9, n_years)
-        curve = np.sin(curve * np.pi)  # bell shape
-        curve = curve / curve.sum()
-
-        total_income = income.sum()
-        redistributed = total_income * curve
-
-        # Spread proportionally across all income accounts
-        for i, col in enumerate(year_cols):
-            df_stressed.loc[income_rows, col] = redistributed[i] * (
-                df_stressed.loc[income_rows, col] /
-                df_stressed.loc[income_rows, year_cols].sum(axis=1)
-            ).fillna(1)
-
-        st.success(f"Ventas redistribuidas usando {redistribution_method}")
-
-    # ------------------------------------------------
-    # METHOD 3: RANDOM SMOOTH (DIRICHLET)
-    # ------------------------------------------------
-    elif redistribution_method == "Aleatorio Suavizado (Dirichlet)":
-
-        # Dirichlet alpha=2 produces smooth but random shape
-        curve = np.random.dirichlet(alpha=np.ones(n_years) * 2)
-
-        total_income = income.sum()
-        redistributed = total_income * curve
-
-        for i, col in enumerate(year_cols):
-            df_stressed.loc[income_rows, col] = redistributed[i] * (
-                df_stressed.loc[income_rows, col] /
-                df_stressed.loc[income_rows, year_cols].sum(axis=1)
-            ).fillna(1)
-
-        st.success(f"Ventas redistribuidas usando {redistribution_method}")
+        income = df_stressed.loc[income_rows, year_cols].values.astype(float)
+        n_years = len(year_cols)
+    
+        # ------------------------------------------------
+        # METHOD 1: RANDOM SHOCK REDISTRIBUTION
+        # ------------------------------------------------
+        if redistribution_method == "Shock Aleatorio":
+    
+            # Example: shocks from -30% to +20%
+            shocks = np.random.uniform(-0.30, 0.20, size=n_years)
+    
+            for i in range(n_years):
+    
+                # Negative shock: move income to next year
+                if shocks[i] < 0 and i < n_years - 1:
+                    lost = -income[:, i] * shocks[i]
+                    income[:, i] += income[:, i] * shocks[i]
+                    income[:, i + 1] += lost
+    
+                # Positive shock: advance income from next year
+                elif shocks[i] > 0 and i > 0:
+                    advance = income[:, i] * shocks[i]
+                    income[:, i] -= advance
+                    income[:, i - 1] += advance
+    
+            df_stressed.loc[income_rows, year_cols] = income
+            st.success(f"Ventas redistribuidas usando {redistribution_method}")
+    
+        # ------------------------------------------------
+        # METHOD 2: S-CURVE REDISTRIBUTION
+        # ------------------------------------------------
+        elif redistribution_method == "S-Curve":
+    
+            # Common S-curve for absorption
+            curve = np.linspace(0.1, 0.9, n_years)
+            curve = np.sin(curve * np.pi)  # bell shape
+            curve = curve / curve.sum()
+    
+            total_income = income.sum()
+            redistributed = total_income * curve
+    
+            # Spread proportionally across all income accounts
+            for i, col in enumerate(year_cols):
+                df_stressed.loc[income_rows, col] = redistributed[i] * (
+                    df_stressed.loc[income_rows, col] /
+                    df_stressed.loc[income_rows, year_cols].sum(axis=1)
+                ).fillna(1)
+    
+            st.success(f"Ventas redistribuidas usando {redistribution_method}")
+    
+        # ------------------------------------------------
+        # METHOD 3: RANDOM SMOOTH (DIRICHLET)
+        # ------------------------------------------------
+        elif redistribution_method == "Aleatorio Suavizado (Dirichlet)":
+    
+            # Dirichlet alpha=2 produces smooth but random shape
+            curve = np.random.dirichlet(alpha=np.ones(n_years) * 2)
+    
+            total_income = income.sum()
+            redistributed = total_income * curve
+    
+            for i, col in enumerate(year_cols):
+                df_stressed.loc[income_rows, col] = redistributed[i] * (
+                    df_stressed.loc[income_rows, col] /
+                    df_stressed.loc[income_rows, year_cols].sum(axis=1)
+                ).fillna(1)
+    
+            st.success(f"Ventas redistribuidas usando {redistribution_method}")
     # --------------------------------------
     # 3) COST INFLATION
     # --------------------------------------
@@ -201,6 +201,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
