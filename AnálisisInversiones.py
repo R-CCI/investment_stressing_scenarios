@@ -71,7 +71,6 @@ else:
 if uploaded_file is not None:
     df = pd.read_excel(uploaded_file)
 
-    st.subheader("")
     st.dataframe(df)
 
     # Copy for stressed scenario
@@ -151,6 +150,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
