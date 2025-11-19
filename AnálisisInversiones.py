@@ -203,7 +203,7 @@ if uploaded_file is not None:
     st.bar_chart(cashflow)
 
 
-    retencion = st.number_input("% Retención", value=10, step=0.5) / 100
+    retencion = st.number_input("% Retención", value=10.0, step=0.5) / 100
     fideico = st.number_input("% Fideicomitente", value=83.07, step=0.1) / 100
     ofp = 1 - fideico 
     st.write(f"Fideicomitente: {round(fideico*100,2)}%")
@@ -258,6 +258,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
