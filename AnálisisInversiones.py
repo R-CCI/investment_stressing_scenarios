@@ -146,11 +146,12 @@ if uploaded_file is not None:
     c2.metric("IRR", f"{project_irr*100:.2f}%")
 
     # Show final table
-    st.subheader("📄 Final Stressed Table")
+    st.subheader("Flujos Simulados Estresados")
     st.dataframe(df_stressed)
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
