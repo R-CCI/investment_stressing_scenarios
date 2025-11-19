@@ -80,7 +80,7 @@ if uploaded_file is not None:
 
     # Detect rows
     income_rows = df[df.iloc[:,0].str.contains(
-        "Ventas|Colocación|Ingresos|Revenue",
+        "Ventas|Colocación|Ingresos|Aporte",
         case=False, na=False
     )].index
 
@@ -216,6 +216,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
