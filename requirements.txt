@@ -4,3 +4,4 @@ numpy==1.26.4
 openpyxl
 numpy-financial
 copy
+rich<14.0.0
