@@ -202,9 +202,14 @@ if uploaded_file is not None:
     st.subheader("📊 Variación Cash Flow")
     st.bar_chart(cashflow)
 
-    # --------------------------------------
-    # NPV, IRR
-    # --------------------------------------
+
+    retencion = st.number_input("% Retención", value=10, step=0.5) / 100
+    fideico = st.number_input("% Fideicomitente", value=83.07, step=0.1) / 100
+    ofp = 1 - fideico 
+    st.write(f"Fideicomitente: {round(fideico*100,2)}%")
+    st.write(f"Público General: {round(ofp*100,2)}%")
+
+    
     project_npv = npv(wacc, cashflow)
     project_irr = irr(cashflow)
     
@@ -220,12 +225,12 @@ if uploaded_file is not None:
     st.write("Flujo Acumulado")
     st.write((reserva_liquidez+cashflow).cumsum())
     
+    st.write("Dividendos Netos")
+    st.write((reserva_liquidez+cashflow).cumsum()*(1-retencion))
+    
     c1, c2 = st.columns(2)
 
-    fideico = st.number_input("% Fideicomitente", value=83.07, step=0.1) / 100
-    ofp = 1 - fideico 
-    st.write(f"Fideicomitente: {round(fideico*100,2)}%")
-    st.write(f"Público General: {round(ofp*100,2)}%")
+    
     
     c1.metric("NPV (USD)", f"{project_npv/fx_rate:,.2f}")
 
@@ -253,6 +258,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
