@@ -6,7 +6,7 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import numpy_financial as npf
-st.set_page_config(page_title="Real Estate Stress Test", layout="wide")
+st.set_page_config(page_title="Stress Analysis", layout="wide")
 
 
 def npv(rate, cashflows):
@@ -150,6 +150,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
