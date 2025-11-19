@@ -9,4 +9,4 @@ RUN apt-get update && apt-get install -y tesseract-ocr
 RUN pip install --upgrade pip setuptools wheel
 RUN pip install -r requirements.txt
 
-ENTRYPOINT ["streamlit", "run", "PerfilTransaccional.py", "--server.port=8080", "--server.address=0.0.0.0"]
+ENTRYPOINT ["streamlit", "run", "AnálisisInversiones.py", "--server.port=8080", "--server.address=0.0.0.0"]
