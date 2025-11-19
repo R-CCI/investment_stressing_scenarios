@@ -223,10 +223,10 @@ if uploaded_file is not None:
     st.dataframe(pd.DataFrame(reserva_liquidez).T, hide_index=True)
 
     st.write("Flujo Acumulado")
-    st.dataframe((reserva_liquidez+cashflow).cumsum(), hide_index=True)
+    st.dataframe(pd.DataFrame((reserva_liquidez+cashflow).cumsum()).T, hide_index=True)
     
     st.write("Dividendos Netos")
-    st.dataframe((reserva_liquidez+cashflow).cumsum()*(1-retencion), hide_index=True)
+    st.dataframe(pd.DataFrame((reserva_liquidez+cashflow).cumsum()*(1-retencion)).T, hide_index=True)
     net_dividends = (reserva_liquidez+cashflow).cumsum()*(1-retencion)
     new_cf = net_dividends.clip(lower=0)
     c1, c2 = st.columns(2)
@@ -259,6 +259,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
