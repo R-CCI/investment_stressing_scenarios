@@ -10,7 +10,7 @@ st.set_page_config(page_title="Stress Analysis", layout="wide")
 
 
 def npv(rate, cashflows):
-    return np.sum(cashflows / (1 + rate) ** np.arange(len(cashflows)))
+    return npf.npv(rate, cashflows)
 
 def irr(cashflows):
     return npf.irr(cashflows)
@@ -203,6 +203,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
