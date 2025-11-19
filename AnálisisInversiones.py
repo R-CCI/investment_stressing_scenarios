@@ -80,7 +80,7 @@ if uploaded_file is not None:
 
     # Assume: first column is category, next ones are years
     year_cols = df.columns[1:]
-
+    future_year_cols = year_cols[1:] 
     # Detect rows
     income_rows = df[df.iloc[:,0].str.contains(
         "Ventas|Colocación|Ingresos|Aporte",
@@ -134,7 +134,7 @@ if uploaded_file is not None:
                     income[:, i] -= advance
                     income[:, i - 1] += advance
     
-            df_stressed.loc[income_rows, year_cols] = income
+            df_stressed.loc[income_rows, future_year_cols] = income
             st.success(f"Ventas redistribuidas usando {redistribution_method}")
     
         # ------------------------------------------------
@@ -151,10 +151,10 @@ if uploaded_file is not None:
             redistributed = total_income * curve
     
             # Spread proportionally across all income accounts
-            for i, col in enumerate(year_cols):
+            for i, col in enumerate(future_year_cols):
                 df_stressed.loc[income_rows, col] = redistributed[i] * (
                     df_stressed.loc[income_rows, col] /
-                    df_stressed.loc[income_rows, year_cols].sum(axis=1)
+                    df_stressed.loc[income_rows, future_year_cols].sum(axis=1)
                 ).fillna(1)
     
             st.success(f"Ventas redistribuidas usando {redistribution_method}")
@@ -170,10 +170,10 @@ if uploaded_file is not None:
             total_income = income.sum()
             redistributed = total_income * curve
     
-            for i, col in enumerate(year_cols):
+            for i, col in enumerate(future_year_cols):
                 df_stressed.loc[income_rows, col] = redistributed[i] * (
                     df_stressed.loc[income_rows, col] /
-                    df_stressed.loc[income_rows, year_cols].sum(axis=1)
+                    df_stressed.loc[income_rows, future_year_cols].sum(axis=1)
                 ).fillna(1)
     
             st.success(f"Ventas redistribuidas usando {redistribution_method}")
@@ -181,7 +181,7 @@ if uploaded_file is not None:
     # 3) COST INFLATION
     # --------------------------------------
     if use_cost_inflation:
-        df_stressed.loc[cost_rows, year_cols] *= (1 + inflation_rate)
+        df_stressed.loc[cost_rows, future_year_cols] *= (1 + inflation_rate)
         st.success(f"Costos incrementados en un {inflation_rate*100:.0f}%")
 
     # --------------------------------------
@@ -191,10 +191,10 @@ if uploaded_file is not None:
     target_row = df_stressed[df_stressed.iloc[:,0].str.contains("Flujo", case=False, na=False)].index[0]
     
     # 2. Compute sums of income and cost rows
-    income_sum = df_stressed.loc[income_rows, year_cols].sum()
-    cost_sum   = df_stressed.loc[all_cost_rows, year_cols].sum()
+    income_sum = df_stressed.loc[income_rows, future_year_cols].sum()
+    cost_sum   = df_stressed.loc[all_cost_rows, future_year_cols].sum()
     # 3. Assign the result to the target row
-    df_stressed.loc[target_row, year_cols] = income_sum + cost_sum
+    df_stressed.loc[target_row, future_year_cols] = income_sum + cost_sum
 
     cashflow =  df_stressed.loc[target_row, year_cols]
 
@@ -218,6 +218,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
