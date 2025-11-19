@@ -23,8 +23,8 @@ uploaded_file = st.file_uploader("Upload your Excel file", type=["xlsx"])
 # Sidebar parameters
 st.sidebar.header("Parameters")
 
-wacc = st.sidebar.number_input("WACC (%)", value=12.0, step=0.1) / 100
-fx_rate = st.sidebar.number_input("DOP/USD Exchange Rate", value=60.0, step=0.5)
+wacc = st.sidebar.number_input("WACC (%)", value=19.48, step=0.1) / 100
+fx_rate = st.sidebar.number_input("DOP/USD Exchange Rate", value=63.0, step=0.5)
 
 st.sidebar.write("---")
 st.sidebar.header("Stress Scenarios (Select any combination)")
@@ -32,9 +32,9 @@ st.sidebar.header("Stress Scenarios (Select any combination)")
 # -------------------------
 # Scenario Switches
 # -------------------------
-use_income_reduction = st.sidebar.checkbox("Income Reduction Stress")
-use_income_redistribution = st.sidebar.checkbox("Income Redistribution Stress")
-use_cost_inflation = st.sidebar.checkbox("Cost Inflation Stress")
+use_income_reduction = st.sidebar.checkbox("Reducción de Ventas")
+use_income_redistribution = st.sidebar.checkbox("Redistribución de las Ventas")
+use_cost_inflation = st.sidebar.checkbox("Inflación o Aumento de Costos")
 
 # -------------------------
 # Scenario Parameters
@@ -48,10 +48,10 @@ else:
 
 if use_income_redistribution:
     redistribute_year = st.sidebar.number_input(
-        "Redistribute FROM Year Index (0 = first year)", min_value=0
+        "Redistribute FROM", min_value=0
     )
     redistribute_pct = st.sidebar.slider(
-        "Percentage to shift (%)", 0, 100, 50
+        "Redistribución (%)", 0, 100, 50
     ) / 100
 else:
     redistribute_year = None
@@ -59,7 +59,7 @@ else:
 
 if use_cost_inflation:
     inflation_rate = st.sidebar.slider(
-        "Increase all costs by (%)", 0, 40, 10
+        "Costos incrementados en un (%)", 0, 40, 10
     ) / 100
 else:
     inflation_rate = 0
@@ -96,7 +96,7 @@ if uploaded_file is not None:
     # --------------------------------------
     if use_income_reduction:
         df_stressed.loc[income_rows, year_cols] *= (1 - income_reduction_pct)
-        st.success(f"Income reduced by {income_reduction_pct*100:.0f}%")
+        st.success(f"Ingresos reducidos en un {income_reduction_pct*100:.0f}%")
 
     # --------------------------------------
     # 2) INCOME REDISTRIBUTION
@@ -117,7 +117,7 @@ if uploaded_file is not None:
                 f"Moved {redistribute_pct*100:.0f}% of income from {col_from} → {col_to}"
             )
         else:
-            st.warning("Redistribution year is out of range.")
+            st.warning("Redistribution out of range.")
 
     # --------------------------------------
     # 3) COST INFLATION
@@ -151,5 +151,6 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
