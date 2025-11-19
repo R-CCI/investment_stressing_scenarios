@@ -85,7 +85,7 @@ if uploaded_file is not None:
     )].index
 
     cost_rows = df[df.iloc[:,0].str.contains(
-        "Cost|Costo|Permisos|Etapa|Vigilancia|Mantenimiento",
+        "Etapa|Vigilancia|Mantenimiento|CAPEX",
         case=False, na=False
     )].index
 
@@ -181,6 +181,8 @@ if uploaded_file is not None:
     # --------------------------------------
     cf_row = df[df.iloc[:,0].str.contains("Flujo", case=False, na=False)].index[0]
     cashflow = df_stressed.loc[cf_row, year_cols].values.astype(float)
+    st.write(cf_row)
+    st.write(cashflow)
 
     st.subheader("📊 Variación Cash Flow")
     st.bar_chart(cashflow)
@@ -201,6 +203,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
