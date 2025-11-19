@@ -193,8 +193,6 @@ if uploaded_file is not None:
     # 2. Compute sums of income and cost rows
     income_sum = df_stressed.loc[income_rows, year_cols].sum()
     cost_sum   = df_stressed.loc[all_cost_rows, year_cols].sum()
-    st.write(income_sum)
-    st.write(cost_sum)
     # 3. Assign the result to the target row
     df_stressed.loc[target_row, year_cols] = income_sum + cost_sum
 
@@ -220,6 +218,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
