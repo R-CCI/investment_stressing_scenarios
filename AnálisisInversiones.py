@@ -217,11 +217,11 @@ if uploaded_file is not None:
     
     c1.metric("NPV (USD)", f"{project_npv/fx_rate:,.2f}")
     
-    cashflow_fideico = copy.copy(cashflow)
+    cashflow_fideico = copy.deepcopy(cashflow)
     aporte_inicial_fideico = st.number_input("Aporte Inicial Fideicomitente", value=-2163.3, step=0.1)
     cashflow_fideico.iloc[0] = aporte_inicial_fideico
     
-    cashflow_opv = copy.copy(cashflow)
+    cashflow_opv = copy.deepcopy(cashflow)
     aporte_inicial_opv = st.number_input("Aporte Inicial Fideicomitente", value=-441.00, step=0.1)
     cashflow_opv.iloc[1] = aporte_inicial_opv
 
@@ -238,6 +238,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
