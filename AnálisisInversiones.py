@@ -214,19 +214,19 @@ if uploaded_file is not None:
     project_irr = irr(cashflow)
     
     st.write("Flujo de Caja del Proyecto")
-    st.write(pd.DataFrame(cashflow).T)
+    st.dataframe(pd.DataFrame(cashflow).T, hide_index=True)
 
     reserva_liquidez = pd.Series(np.zeros(len(cashflow)), index=cashflow.index)
     reserva_liquidez.iloc[1] = -350.00
     
     st.write("Reserva de Liquidez")
-    st.write(reserva_liquidez)
+    st.dataframe(pd.DataFrame(reserva_liquidez).T, hide_index=True)
 
     st.write("Flujo Acumulado")
-    st.write((reserva_liquidez+cashflow).cumsum())
+    st.dataframe((reserva_liquidez+cashflow).cumsum(), hide_index=True)
     
     st.write("Dividendos Netos")
-    st.write((reserva_liquidez+cashflow).cumsum()*(1-retencion))
+    st.dataframe((reserva_liquidez+cashflow).cumsum()*(1-retencion), hide_index=True)
     net_dividends = (reserva_liquidez+cashflow).cumsum()*(1-retencion)
     new_cf = net_dividends.clip(lower=0)
     c1, c2 = st.columns(2)
@@ -259,6 +259,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
