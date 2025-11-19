@@ -8,9 +8,7 @@ import numpy as np
 
 st.set_page_config(page_title="Real Estate Stress Test", layout="wide")
 
-# --------------------------------------
-# Utility functions
-# --------------------------------------
+
 def npv(rate, cashflows):
     return np.sum(cashflows / (1 + rate) ** np.arange(len(cashflows)))
 
@@ -18,10 +16,7 @@ def irr(cashflows):
     return np.irr(cashflows)
 
 
-# --------------------------------------
-# Main App
-# --------------------------------------
-st.title("🏗️ Real Estate Project — Stress Test Simulator")
+st.title("Simulador de Escenarios de Estrés")
 
 uploaded_file = st.file_uploader("Upload your Excel file", type=["xlsx"])
 
@@ -145,6 +140,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
