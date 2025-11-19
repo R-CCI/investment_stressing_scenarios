@@ -101,7 +101,7 @@ if uploaded_file is not None:
     # 1) INCOME REDUCTION
     # --------------------------------------
     if use_income_reduction:
-        df_stressed.loc[income_rows, year_cols] *= (1 - income_reduction_pct)
+        df_stressed.loc[income_rows, future_year_cols] *= (1 - income_reduction_pct)
         st.success(f"Ingresos reducidos en un {income_reduction_pct*100:.0f}%")
 
     # --------------------------------------
@@ -109,8 +109,8 @@ if uploaded_file is not None:
     # --------------------------------------
     if use_income_redistribution:
 
-        income = df_stressed.loc[income_rows, year_cols].values.astype(float)
-        n_years = len(year_cols)
+        income = df_stressed.loc[income_rows, future_year_cols].values.astype(float)
+        n_years = len(future_year_cols)
     
         # ------------------------------------------------
         # METHOD 1: RANDOM SHOCK REDISTRIBUTION
@@ -191,10 +191,10 @@ if uploaded_file is not None:
     target_row = df_stressed[df_stressed.iloc[:,0].str.contains("Flujo", case=False, na=False)].index[0]
     
     # 2. Compute sums of income and cost rows
-    income_sum = df_stressed.loc[income_rows, future_year_cols].sum()
-    cost_sum   = df_stressed.loc[all_cost_rows, future_year_cols].sum()
+    income_sum = df_stressed.loc[income_rows, year_cols].sum()
+    cost_sum   = df_stressed.loc[all_cost_rows, year_cols].sum()
     # 3. Assign the result to the target row
-    df_stressed.loc[target_row, future_year_cols] = income_sum + cost_sum
+    df_stressed.loc[target_row, year_cols] = income_sum + cost_sum
 
     cashflow =  df_stressed.loc[target_row, year_cols]
 
@@ -218,6 +218,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
