@@ -222,7 +222,7 @@ if uploaded_file is not None:
     cashflow_fideico.iloc[0] = aporte_inicial_fideico
     
     cashflow_opv = cashflow
-    aporte_inicial_opv = st.number_input("Aporte Inicial Fideicomitente", value=-441, step=0.1)
+    aporte_inicial_opv = st.number_input("Aporte Inicial Fideicomitente", value=-441.00, step=0.1)
     cashflow_opv.iloc[1] = aporte_inicial_opv
 
     fideico_irr = irr(cashflow_fideico)
@@ -238,6 +238,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
