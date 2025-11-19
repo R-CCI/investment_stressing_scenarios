@@ -124,7 +124,7 @@ if uploaded_file is not None:
     # --------------------------------------
     if use_cost_inflation:
         df_stressed.loc[cost_rows, year_cols] *= (1 + inflation_rate)
-        st.success(f"Costs increased by {inflation_rate*100:.0f}%")
+        st.success(f"Costos incrementados en un {inflation_rate*100:.0f}%")
 
     # --------------------------------------
     # CREATE CASHFLOW VECTOR
@@ -132,7 +132,7 @@ if uploaded_file is not None:
     cf_row = df[df.iloc[:,0].str.contains("Flujo", case=False, na=False)].index[0]
     cashflow = df_stressed.loc[cf_row, year_cols].values.astype(float)
 
-    st.subheader("📊 Stressed Cash Flow")
+    st.subheader("📊 Variación Cash Flow")
     st.bar_chart(cashflow)
 
     # --------------------------------------
@@ -151,6 +151,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
