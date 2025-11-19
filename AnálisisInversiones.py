@@ -184,8 +184,17 @@ if uploaded_file is not None:
     # --------------------------------------
     # CREATE CASHFLOW VECTOR
     # --------------------------------------
-    df_stressed[df_stressed.iloc[:,0].str.contains("Flujo", case=False, na=False)] = df_stressed[df_stressed.loc[income_rows, year_cols].sum()] - df_stressed[df_stressed.loc[all_cost_rows, year_cols].sum()]
-    cashflow =  df_stressed[df_stressed.iloc[:,0].str.contains("Flujo", case=False, na=False)]
+    # 1. Identify the target row
+    target_row = df_stressed[df_stressed.iloc[:,0].str.contains("Flujo", case=False, na=False)].index[0]
+    
+    # 2. Compute sums of income and cost rows
+    income_sum = df_stressed.loc[income_rows, year_cols].sum()
+    cost_sum   = df_stressed.loc[all_cost_rows, year_cols].sum()
+    
+    # 3. Assign the result to the target row
+    df_stressed.loc[target_row, year_cols] = income_sum - cost_sum
+
+    cashflow =  df_stressed.loc[target_row, year_cols]
     st.write(cashflow)
 
     st.subheader("📊 Variación Cash Flow")
@@ -207,6 +216,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
