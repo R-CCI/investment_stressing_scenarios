@@ -69,7 +69,7 @@ else:
 # PROCESSING
 # --------------------------------------
 if uploaded_file is not None:
-    df = pd.read_excel(uploaded_file, sheet_name=0)
+    df = pd.read_excel(uploaded_file)
 
     st.subheader("📄 Raw Data")
     st.dataframe(df)
@@ -151,3 +151,4 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
