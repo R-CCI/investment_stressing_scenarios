@@ -7,7 +7,6 @@ COPY . ./
 
 RUN apt-get update && apt-get install -y tesseract-ocr
 RUN pip install --upgrade pip setuptools wheel
-RUN pip install "rich<14"
 RUN pip install --upgrade streamlit
 RUN pip install -r requirements.txt
 
