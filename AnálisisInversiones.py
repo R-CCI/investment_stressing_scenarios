@@ -233,7 +233,7 @@ if uploaded_file is not None:
 
     
     
-    c1.metric("NPV (USD)", f"{project_npv/fx_rate:,.2f}")
+    
 
     st.write("Flujo de Caja del Proyecto")
 
@@ -248,6 +248,10 @@ if uploaded_file is not None:
 
     fideico_irr = irr(cashflow_fideico)
     opv_irr = irr(cashflow_opv)
+
+    c1.metric("NPV (USD)", f"{project_npv/fx_rate:,.2f}")
+    c1.metric("NPV of Net Dividends (USD)", f"{npv(wacc, new_cf)/fx_rate:,.2f}")
+    
     c2.metric("IRR Fideicomiso", f"{fideico_irr*100:.2f}%")
     c2.metric("IRR Público General", f"{opv_irr*100:.2f}%")
 
@@ -259,6 +263,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
