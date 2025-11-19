@@ -69,7 +69,10 @@ else:
 # --------------------------------------
 if uploaded_file is not None:
     df = pd.read_excel(uploaded_file)
-
+    try:
+        df = df[~np.logical_and(df['Cash Flow del Fideicomiso'].str.contains("Total"), df['Cash Flow del Fideicomiso'].str.contains("Cost"))]
+    except:
+        pass
     st.dataframe(df)
 
     # Copy for stressed scenario
@@ -216,6 +219,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Upload an Excel file to begin.")
+
 
 
 
