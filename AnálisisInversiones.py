@@ -15,6 +15,43 @@ def npv(rate, cashflows):
 def irr(cashflows):
     return npf.irr(cashflows)
 
+def run_montecarlo(cashflow_base, n_sim=5000,
+                   income_shock_std=0.10,
+                   redistribution_std=0.10,
+                   cost_inflation_mean=0.04,
+                   cost_inflation_std=0.02,
+                   wacc_mean=0.10,
+                   wacc_std=0.015):
+
+    npvs = []
+
+    for _ in range(n_sim):
+
+        cf = cashflow_base.copy().astype(float)
+
+        # 1) Shock aleatorio a ingresos (años futuros)
+        income_shock = np.random.normal(0, income_shock_std)
+        cf[1:] *= (1 + income_shock)
+
+        # 2) Redistribución aleatoria (no cambia el total)
+        redist = np.random.normal(0, redistribution_std, size=len(cf)-1)
+        redist -= redist.mean()
+        cf[1:] *= (1 + redist)
+
+        # 3) Inflación de costos si hay costos negativos en CF
+        cost_inf = np.random.normal(cost_inflation_mean, cost_inflation_std)
+        cf[cf < 0] *= (1 + cost_inf)
+
+        # 4) WACC aleatorio
+        wacc = np.random.normal(wacc_mean, wacc_std)
+
+        # 5) Calcular NPV
+        npv = compute_npv(cf, wacc)
+        npvs.append(npv)
+
+    return np.array(npvs)
+
+
 
 st.title("Simulador de Escenarios de Estrés")
 
@@ -257,9 +294,23 @@ if uploaded_file is not None:
     # Show final table
     st.subheader("Flujos Simulados Estresados")
     st.dataframe(df_stressed)
+    
+    # Histograma
+    st.subheader("Montecarlo NPV")
+    npvs = run_montecarlo(cashflow, wacc_mean=wacc)
+    fig, ax = plt.subplots(figsize=(8,5))
+    ax.hist(npvs, bins=40)
+    ax.set_title("Distribución del NPV (Montecarlo)")
+    ax.set_xlabel("NPV")
+    ax.set_ylabel("Frecuencia")
+    
+    st.pyplot(fig)
+    
+
 
 else:
     st.info("Suba un Excel")
+
 
 
 
