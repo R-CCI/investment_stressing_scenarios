@@ -295,7 +295,7 @@ if uploaded_file is not None:
     
     # Histograma
     st.subheader("Montecarlo NPV")
-    npvs = run_montecarlo(cashflow, wacc_mean=wacc)
+    npvs = run_montecarlo(cashflow, wacc_mean=wacc)/fx_rate
     npv_df = pd.DataFrame({"NPV": npvs})
     fig = px.histogram(
     npv_df,
@@ -315,6 +315,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Suba un Excel")
+
 
 
 
