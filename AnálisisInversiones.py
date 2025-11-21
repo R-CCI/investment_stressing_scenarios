@@ -46,8 +46,8 @@ def run_montecarlo(cashflow_base, n_sim=5000,
         wacc = np.random.normal(wacc_mean, wacc_std)
 
         # 5) Calcular NPV
-        npv = npv(wacc,cf)
-        npvs.append(npv)
+        npv_get = npv(wacc,cf)
+        npvs.append(npv_get)
 
     return np.array(npvs)
 
@@ -310,6 +310,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Suba un Excel")
+
 
 
 
