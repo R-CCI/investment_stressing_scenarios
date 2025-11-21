@@ -314,9 +314,9 @@ if uploaded_file is not None:
     p5  = np.percentile(npvs, 5)
     p10 = np.percentile(npvs, 10)
 
-    fig.add_vline(x=p1,  line_dash="dash", line_width=2, annotation_text="P1")
-    fig.add_vline(x=p5,  line_dash="dash", line_width=2, annotation_text="P5")
-    fig.add_vline(x=p10, line_dash="dash", line_width=2, annotation_text="P10")
+    fig.add_vline(x=p1,  line_dash="dash", line_width=2, annotation_text=f"P1={round(p1,2)}")
+    fig.add_vline(x=p5,  line_dash="dash", line_width=2, annotation_text=f"P5={round(p5,2)}")
+    fig.add_vline(x=p10, line_dash="dash", line_width=2, annotation_text=f"P10={round(p10,2)}")
 
     st.plotly_chart(fig, use_container_width=True)
         
@@ -324,6 +324,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Suba un Excel")
+
 
 
 
