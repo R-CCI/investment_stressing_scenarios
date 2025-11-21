@@ -279,13 +279,17 @@ if uploaded_file is not None:
     net_dividends_tir.iloc[0] = aporte_inicial_fideico
 
     st.write("Flujo Fideicomitente")
-    st.dataframe(pd.DataFrame((net_dividends_tir)).T, hide_index=True)
+    st.dataframe(pd.DataFrame((net_dividends_tir_fideico)).T, hide_index=True)
     
     cashflow_opv = (new_cf*ofp)
     aporte_inicial_opv = st.number_input("Aporte Inicial Publico General", value=-441.00, step=0.1)
     cashflow_opv.iloc[1] = aporte_inicial_opv
     net_dividends_tir_opv = net_dividends_tir*ofp
     net_dividends_tir_opv.iloc[0] = aporte_inicial_opv
+
+    st.write("Flujo Fideicomitente")
+    st.dataframe(pd.DataFrame((net_dividends_tir_opv)).T, hide_index=True)
+    
 
 
     fideico_irr = irr(net_dividends_tir)
@@ -334,6 +338,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Suba un Excel")
+
 
 
 
