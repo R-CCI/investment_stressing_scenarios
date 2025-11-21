@@ -1,11 +1,9 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-
-import streamlit as st
-import pandas as pd
-import numpy as np
 import numpy_financial as npf
+import plotly.express as px
+
 st.set_page_config(page_title="Análisis Estrés", layout="wide")
 
 
@@ -298,18 +296,26 @@ if uploaded_file is not None:
     # Histograma
     st.subheader("Montecarlo NPV")
     npvs = run_montecarlo(cashflow, wacc_mean=wacc)
-    fig, ax = plt.subplots(figsize=(8,5))
-    ax.hist(npvs, bins=40)
-    ax.set_title("Distribución del NPV (Montecarlo)")
-    ax.set_xlabel("NPV")
-    ax.set_ylabel("Frecuencia")
+    npv_df = pd.DataFrame({"NPV": npvs})
+    fig = px.histogram(
+    npv_df,
+    x="NPV",
+    nbins=60,
+    title="Distribución Montecarlo del NPV",
+    opacity=0.7
+    )
     
-    st.pyplot(fig)
+    fig.update_layout(
+        bargap=0.05,
+        template="plotly_white"
+    )
+    st.plotly_chart(fig, use_container_width=True)
+        
     
-
 
 else:
     st.info("Suba un Excel")
+
 
 
 
