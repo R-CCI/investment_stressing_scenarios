@@ -276,6 +276,7 @@ if uploaded_file is not None:
     aporte_inicial_fideico = st.number_input("Aporte Inicial Fideicomitente", value=-2163.3, step=0.1)
     cashflow_fideico.iloc[0] = aporte_inicial_fideico
     net_dividends_tir_fideico = net_dividends_tir*fideico
+    net_dividends_tir.iloc[0] = aporte_inicial_fideico
     net_dividends_tir_fideico.iloc[0] = aporte_inicial_fideico
 
     st.write("Flujo Fideicomitente")
@@ -338,6 +339,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Suba un Excel")
+
 
 
 
