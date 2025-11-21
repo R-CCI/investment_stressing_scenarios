@@ -275,7 +275,7 @@ if uploaded_file is not None:
     cashflow_fideico = (new_cf*fideico)
     aporte_inicial_fideico = st.number_input("Aporte Inicial Fideicomitente", value=-2163.3, step=0.1)
     cashflow_fideico.iloc[0] = aporte_inicial_fideico
-    net_dividends_tir = net_dividends_tir*fideico
+    net_dividends_tir_fideico = net_dividends_tir*fideico
     net_dividends_tir.iloc[0] = aporte_inicial_fideico
 
     st.write("Flujo Fideicomitente")
@@ -284,9 +284,12 @@ if uploaded_file is not None:
     cashflow_opv = (new_cf*ofp)
     aporte_inicial_opv = st.number_input("Aporte Inicial Publico General", value=-441.00, step=0.1)
     cashflow_opv.iloc[1] = aporte_inicial_opv
+    net_dividends_tir_opv = net_dividends_tir*ofp
+    net_dividends_tir_opv.iloc[0] = aporte_inicial_opv
+
 
     fideico_irr = irr(net_dividends_tir)
-    opv_irr = irr(cashflow_opv)
+    opv_irr = irr(net_dividends_tir_opv)
 
     c1.metric("NPV (USD)", f"{project_npv/fx_rate:,.2f}")
     c1.metric("NPV of Dividenddos Netos (USD)", f"{npv(wacc, new_cf)/fx_rate:,.2f}")
@@ -331,6 +334,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Suba un Excel")
+
 
 
 
