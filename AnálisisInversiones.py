@@ -263,7 +263,7 @@ if uploaded_file is not None:
     
     st.write("Dividendos Netos")
   #  st.dataframe(pd.DataFrame((reserva_liquidez+cashflow).cumsum()*(1-retencion)).T, hide_index=True)
-   # net_dividends = (reserva_liquidez+cashflow).cumsum()*(1-retencion)
+    net_dividends = (reserva_liquidez+cashflow).cumsum()*(1-retencion)
    # net_dividends_tir = ((reserva_liquidez+cashflow)*(1-retencion)).clip(lower=0)
 
     cf = (reserva_liquidez+cashflow).astype(float)
@@ -290,7 +290,9 @@ if uploaded_file is not None:
     st.dataframe(pd.DataFrame((dividends)).T, hide_index=True)
 
 
-    new_cf = net_dividends.clip(lower=0)
+    new_cf = dividends
+    net_dividends = dividends
+    net_dividends_tir = dividends
     c1, c2 = st.columns(2)
     
     
@@ -366,6 +368,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Suba un Excel")
+
 
 
 
