@@ -287,7 +287,7 @@ if uploaded_file is not None:
     net_dividends_tir_opv = ((reserva_liquidez+cashflow)*(1-retencion)).clip(lower=0)*ofp
     net_dividends_tir_opv.iloc[1] = aporte_inicial_opv
 
-    st.write("Flujo Fideicomitente")
+    st.write("Flujo Publico General")
     st.dataframe(pd.DataFrame((net_dividends_tir_opv)).T, hide_index=True)
     
 
@@ -338,6 +338,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Suba un Excel")
+
 
 
 
