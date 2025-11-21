@@ -265,9 +265,33 @@ if uploaded_file is not None:
     st.dataframe(pd.DataFrame((reserva_liquidez+cashflow).cumsum()*(1-retencion)).T, hide_index=True)
     net_dividends = (reserva_liquidez+cashflow).cumsum()*(1-retencion)
     net_dividends_tir = ((reserva_liquidez+cashflow)*(1-retencion)).clip(lower=0)
-    new_cf = net_dividends.clip(lower=0)
-    c1, c2 = st.columns(2)
 
+    cf = (reserva_liquidez+cashflow).astype(float)
+    
+    dividends = []
+    cumsum = 0
+    
+    for value in cf:
+        # 1. add this year's CF
+        cumsum += value
+    
+        if cumsum > 0:
+            # 2. pay out all excess cash as dividend
+            dividend = cumsum
+            cumsum = 0    # reset because we paid everything
+        else:
+            # 3. cannot pay dividend
+            dividend = 0
+    
+        dividends.append(dividend)
+    
+    dividends = pd.Series(dividends, index=cf.index)
+
+    st.dataframe(pd.DataFrame((dividends)).T, hide_index=True)
+
+
+    new_cf = net_dividends.clip(lower=0)
+    c1, c2 = st.columns(2
     
     
     
@@ -342,6 +366,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Suba un Excel")
+
 
 
 
