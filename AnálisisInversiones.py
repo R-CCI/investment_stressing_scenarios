@@ -291,7 +291,7 @@ if uploaded_file is not None:
 
 
     new_cf = net_dividends.clip(lower=0)
-    c1, c2 = st.columns(2
+    c1, c2 = st.columns(2)
     
     
     
@@ -366,6 +366,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Suba un Excel")
+
 
 
 
