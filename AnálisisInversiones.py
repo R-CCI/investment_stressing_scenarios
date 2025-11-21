@@ -275,7 +275,7 @@ if uploaded_file is not None:
     cashflow_fideico.iloc[0] = aporte_inicial_fideico
 
     st.write("Flujo Fideicomitente")
-    st.dataframe(pd.DataFrame((cashflow_fideico).T, hide_index=True)
+    st.dataframe(pd.DataFrame((cashflow_fideico)).T, hide_index=True)
     
     cashflow_opv = (new_cf*ofp)
     aporte_inicial_opv = st.number_input("Aporte Inicial Publico General", value=-441.00, step=0.1)
