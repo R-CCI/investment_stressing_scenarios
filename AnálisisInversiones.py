@@ -275,6 +275,7 @@ if uploaded_file is not None:
     cashflow_fideico = (new_cf*fideico)
     aporte_inicial_fideico = st.number_input("Aporte Inicial Fideicomitente", value=-2163.3, step=0.1)
     cashflow_fideico.iloc[0] = aporte_inicial_fideico
+    net_dividends_tir.iloc[0] = aporte_inicial_fideico
 
     st.write("Flujo Fideicomitente")
     st.dataframe(pd.DataFrame((net_dividends_tir*fideico)).T, hide_index=True)
@@ -329,6 +330,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Suba un Excel")
+
 
 
 
