@@ -284,7 +284,7 @@ if uploaded_file is not None:
     cashflow_opv = (new_cf*ofp)
     aporte_inicial_opv = st.number_input("Aporte Inicial Publico General", value=-441.00, step=0.1)
     cashflow_opv.iloc[1] = aporte_inicial_opv
-    net_dividends_tir_opv = net_dividends_tir*ofp
+    net_dividends_tir_opv = ((reserva_liquidez+cashflow)*(1-retencion)).clip(lower=0)*ofp
     net_dividends_tir_opv.iloc[1] = aporte_inicial_opv
 
     st.write("Flujo Fideicomitente")
@@ -338,6 +338,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Suba un Excel")
+
 
 
 
