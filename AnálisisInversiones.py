@@ -250,6 +250,7 @@ if uploaded_file is not None:
 
     reserva_liquidez = pd.Series(np.zeros(len(cashflow)), index=cashflow.index)
     reserva_liquidez.iloc[1] = -350.00
+    reserva_liquidez.iloc[-1] = 350.00
     
     st.write("Reserva de Liquidez")
     st.dataframe(pd.DataFrame(reserva_liquidez).T, hide_index=True)
@@ -327,6 +328,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Suba un Excel")
+
 
 
 
