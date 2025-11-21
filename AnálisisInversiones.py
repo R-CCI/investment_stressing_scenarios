@@ -309,12 +309,22 @@ if uploaded_file is not None:
         bargap=0.05,
         template="plotly_white"
     )
+
+    p1  = np.percentile(npvs, 1)
+    p5  = np.percentile(npvs, 5)
+    p10 = np.percentile(npvs, 10)
+
+    fig.add_vline(x=p1,  line_dash="dash", line_width=2, annotation_text="P1")
+    fig.add_vline(x=p5,  line_dash="dash", line_width=2, annotation_text="P5")
+    fig.add_vline(x=p10, line_dash="dash", line_width=2, annotation_text="P10")
+
     st.plotly_chart(fig, use_container_width=True)
         
     
 
 else:
     st.info("Suba un Excel")
+
 
 
 
