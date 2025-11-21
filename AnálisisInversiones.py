@@ -261,6 +261,7 @@ if uploaded_file is not None:
     st.write("Dividendos Netos")
     st.dataframe(pd.DataFrame((reserva_liquidez+cashflow).cumsum()*(1-retencion)).T, hide_index=True)
     net_dividends = (reserva_liquidez+cashflow).cumsum()*(1-retencion)
+    net_dividends_tir = (reserva_liquidez+cashflow)*(1-retencion)
     new_cf = net_dividends.clip(lower=0)
     c1, c2 = st.columns(2)
 
@@ -276,13 +277,13 @@ if uploaded_file is not None:
     cashflow_fideico.iloc[0] = aporte_inicial_fideico
 
     st.write("Flujo Fideicomitente")
-    st.dataframe(pd.DataFrame((cashflow_fideico)).T, hide_index=True)
+    st.dataframe(pd.DataFrame((net_dividends_tir*fideico)).T, hide_index=True)
     
     cashflow_opv = (new_cf*ofp)
     aporte_inicial_opv = st.number_input("Aporte Inicial Publico General", value=-441.00, step=0.1)
     cashflow_opv.iloc[1] = aporte_inicial_opv
 
-    fideico_irr = irr(cashflow_fideico)
+    fideico_irr = irr(net_dividends_tir)
     opv_irr = irr(cashflow_opv)
 
     c1.metric("NPV (USD)", f"{project_npv/fx_rate:,.2f}")
@@ -328,6 +329,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Suba un Excel")
+
 
 
 
