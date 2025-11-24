@@ -347,7 +347,7 @@ if uploaded_file is not None:
     inv_total['Inversion Total'] = total_inv
     inv_total['Diferencia'] = inv_total['VPN'] - inv_total['Inversion Total']
     st.subheader("Comparativo con Diferentes Tasas de Descuento")
-    st.dataframe(df_stressed)
+    st.dataframe(inv_total)
     
     # Histograma
     st.subheader("Montecarlo NPV")
@@ -380,6 +380,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Suba un Excel")
+
 
 
 
