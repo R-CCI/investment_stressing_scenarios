@@ -344,7 +344,7 @@ if uploaded_file is not None:
         list_of_npv.append(npv(w/100, cashflow))
     
     inv_total = pd.DataFrame({'WACC':wacc_values, "VPN":list_of_npv})
-    inv_total['Inversion Total'] = total_inv
+    inv_total['Inversion Total'] = total_inv*-1
     inv_total['Diferencia'] = inv_total['VPN'] - inv_total['Inversion Total']
     st.subheader("Comparativo con Diferentes Tasas de Descuento")
     st.dataframe(inv_total)
@@ -380,6 +380,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Suba un Excel")
+
 
 
 
