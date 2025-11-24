@@ -322,7 +322,7 @@ if uploaded_file is not None:
     
 
 
-    fideico_irr = irr(net_dividends_tir)
+    fideico_irr = irr(net_dividends_tir_fideico)
     opv_irr = irr(net_dividends_tir_opv)
 
     c1.metric("NPV (USD)", f"{project_npv/fx_rate:,.2f}")
@@ -368,6 +368,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Suba un Excel")
+
 
 
 
