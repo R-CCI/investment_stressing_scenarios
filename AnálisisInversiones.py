@@ -364,6 +364,12 @@ if uploaded_file is not None:
     line_width=2,
     name="Inversión Total")
 
+    fig.update_layout(
+    xaxis_title="WACC (%)",
+    yaxis_title="Valor Presente Neto"
+    )
+
+
     st.plotly_chart(fig, use_container_width=True)
     
     st.dataframe(inv_total)
@@ -401,6 +407,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Suba un Excel")
+
 
 
 
