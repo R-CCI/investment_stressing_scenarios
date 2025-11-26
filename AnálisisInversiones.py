@@ -327,8 +327,8 @@ if uploaded_file is not None:
     fideico_irr = irr(net_dividends_tir_fideico)
     opv_irr = irr(net_dividends_tir_opv)
 
-    c1.metric("NPV (USD)", f"{project_npv:,.2f}")
-    c1.metric("NPV of Dividendos Netos (USD)", f"{npv(wacc, net_dividends_tir):,.2f}")
+    c1.metric("NPV (USD)", f"{project_npv/fx_rate:,.2f}")
+    c1.metric("NPV of Dividendos Netos (USD)", f"{npv(wacc, net_dividends_tir)/fx_rate:,.2f}")
     
     c2.metric("IRR Fideicomiso", f"{fideico_irr*100:.2f}%")
     c2.metric("IRR Público General", f"{opv_irr*100:.2f}%")
@@ -347,7 +347,27 @@ if uploaded_file is not None:
     inv_total['Inversion Total'] = total_inv*-1
     inv_total['Diferencia'] = inv_total['VPN'] - inv_total['Inversion Total']
     st.subheader("Comparativo con Diferentes Tasas de Descuento")
+    fig = go.Figure()
+
+    fig.add_trace(
+        go.Scatter(
+            x=inv_total['WACC'],
+            y=inv_total['VPN'],   # change to your column name
+            mode='markers',
+            name='VPN'
+        )
+    )
+    fig.add_hline(
+    y=total_inv*-1,
+    line_dash="dash",
+    line_width=2,
+    name="Inversión Total")
+
+    st.plotly_chart(fig, use_container_width=True)
+    
     st.dataframe(inv_total)
+
+    
     
     # Histograma
     st.subheader("Montecarlo NPV")
@@ -380,6 +400,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Suba un Excel")
+
 
 
 
