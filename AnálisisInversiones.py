@@ -362,6 +362,7 @@ if uploaded_file is not None:
     y=total_inv*-1,
     line_dash="dash",
     line_width=2,
+    line_color="tomato",    
     name="Inversión Total")
 
     fig.update_layout(
@@ -407,6 +408,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Suba un Excel")
+
 
 
 
