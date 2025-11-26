@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import numpy_financial as npf
 import plotly.express as px
+import plotly.graph_objects as go
 
 st.set_page_config(page_title="Análisis Estrés", layout="wide")
 
@@ -400,6 +401,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Suba un Excel")
+
 
 
 
