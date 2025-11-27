@@ -153,8 +153,8 @@ if uploaded_file is not None:
         # ------------------------------------------------
         if redistribution_method == "Shock Aleatorio":
     
-            # Example: shocks from -30% to +20%
-            shocks = np.random.uniform(-0.30, 0.20, size=n_years)
+            # Example: shocks from -50% to +50%
+            shocks = np.random.uniform(-0.50, 0.50, size=n_years)
     
             for i in range(n_years):
     
@@ -408,6 +408,7 @@ if uploaded_file is not None:
 
 else:
     st.info("Suba un Excel")
+
 
 
 
